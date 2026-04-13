@@ -26,10 +26,13 @@ export const normalizeSaudiPhone = (phone) => {
   if (!phone) return "";
   const trimmed = phone.trim().replace(/\s+/g, "");
   if (trimmed.startsWith("05")) {
-    return "+966" + trimmed.slice(1);
+    return "966" + trimmed.slice(1);
   }
   if (trimmed.startsWith("9665")) {
-    return "+" + trimmed;
+    return trimmed;
+  }
+  if (trimmed.startsWith("+9665")) {
+    return trimmed.slice(1);
   }
   return trimmed;
 };

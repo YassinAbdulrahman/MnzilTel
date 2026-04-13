@@ -48,17 +48,22 @@ export default function TopUp() {
     setLoading(true);
 
     setTimeout(async () => {
-      const normalizedNumber = normalizeSaudiPhone(phone);
-      const res = await topUp({ phone: normalizedNumber, bundle });
-      setLoading(false);
+      try {
+        const normalizedNumber = normalizeSaudiPhone(phone);
+        const res = await topUp({ phone: normalizedNumber, bundle });
+        setLoading(false);
 
-      if (!res.success) {
-        toast.error(res.message);
-        return;
+        if (!res.success) {
+          toast.error(res.message);
+          return;
+        }
+
+        toast.success(res.message);
+        navigate("/");
+      } catch (error) {
+        setLoading(false);
+        toast.error(error.message || "Top up failed");
       }
-
-      toast.success(res.message);
-      navigate("/");
     }, 1000);
   };
 
